@@ -1,6 +1,7 @@
 # camera_demo.py
 
 import cv2
+import torch
 
 from main import (
     load_full_pipeline,
@@ -54,6 +55,8 @@ def draw_result(frame_bgr, result):
 
 
 def main():
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
     cap = cv2.VideoCapture(0)
 
     if not cap.isOpened():
@@ -94,8 +97,7 @@ def main():
                     feature_extractor,
                     scaler,
                     svm_clf,
-                    device,
-                ) = load_full_pipeline()
+                ) = load_full_pipeline(device)
 
                 print("Classifying frame...")
 

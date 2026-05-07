@@ -58,6 +58,24 @@ def draw_result(frame_bgr, result):
 
     return frame_bgr
 
+def open_camera(camera_index):
+    backends = [
+        cv2.CAP_MSMF,
+        cv2.CAP_DSHOW,
+        cv2.CAP_ANY,
+    ]
+
+    for backend in backends:
+        cap = cv2.VideoCapture(camera_index, backend)
+
+        if cap.isOpened():
+            print(f"Opened camera {camera_index} with backend {backend}")
+            return cap
+
+        cap.release()
+
+    return None
+
 
 def window_is_open(window_name):
     try:
@@ -77,6 +95,16 @@ def main():
 
     if not cap.isOpened():
         raise RuntimeError(f"Could not open camera index {args.camera}.")
+    
+    
+    print("Loading model pipeline...")
+    (
+        detector,
+        sam_predictor,
+        feature_extractor,
+        scaler,
+        svm_clf,
+    ) = load_full_pipeline(device)
 
     last_classified_frame = None
     classification_window_open = False
@@ -114,17 +142,7 @@ def main():
             last_classified_frame = None
 
         if key == 32:  # SPACE
-            print("Loading model pipeline...")
-
             try:
-                (
-                    detector,
-                    sam_predictor,
-                    feature_extractor,
-                    scaler,
-                    svm_clf,
-                ) = load_full_pipeline(device)
-
                 print("Classifying frame...")
 
                 captured_frame = frame_bgr.copy()

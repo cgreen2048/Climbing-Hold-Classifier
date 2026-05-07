@@ -40,5 +40,5 @@ Additionally, I added a YOLO object detector trained on the bounding boxes withi
 2. Download the models from [this Google drive folder](https://drive.google.com/drive/folders/1J9KZSzip9t9fhIs0OuUkPPyFs8-KAy9d?usp=drive_link)
 - Note that zipping the folder may not download the SAM model weights in `sam_vit_h_4b8939.pth`, so you may need to manually download this file
 3. Add the downloaded folder to the project directory
-4. Run `python camera_demo.py`
+4. Run `python camera_demo.py --camera 0` for the system's native camera or `python camera_demo.py --camera 1` for the first external camera plugged in
 5. Click the space bar when capturing a climbing hold to have the model attempt to classify it

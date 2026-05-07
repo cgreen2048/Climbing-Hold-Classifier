@@ -1,5 +1,3 @@
-# camera_demo.py
-
 import argparse
 import cv2
 import torch
@@ -98,7 +96,6 @@ def main():
         live_frame = frame_bgr.copy()
         cv2.imshow(LIVE_WINDOW, live_frame)
 
-        # Only show the still frame if the classification window is meant to be open.
         if classification_window_open and last_classified_frame is not None:
             if window_is_open(CLASSIFICATION_WINDOW):
                 cv2.imshow(CLASSIFICATION_WINDOW, last_classified_frame)
